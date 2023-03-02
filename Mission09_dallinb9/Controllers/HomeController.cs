@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mission09_dallinb9.Models;
+using Mission09_dallinb9.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,16 +19,31 @@ namespace Mission09_dallinb9.Controllers
             repo = temp;
         }
 
-        public IActionResult Index(int pageNum = 1)
+        public IActionResult Index(int pageNum)
         {
-            int pageSize = 5;
+            int pageSize = 10;
+
+            var x = new BooksViewModel
+            {
+                Books = repo.Books
+                    .OrderBy(b => b.Title)
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize),
+
+                PageInfo = new PageInfo
+                {
+                    TotalNumBooks = repo.Books.Count(),
+                    BooksPerPage = pageSize,
+                    CurrentPage = pageNum
+                }
+            };
             
             var data = repo.Books
                 .OrderBy(b => b.Title)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize);
 
-            return View(data);
+            return View(x);
         }
     }
 }
