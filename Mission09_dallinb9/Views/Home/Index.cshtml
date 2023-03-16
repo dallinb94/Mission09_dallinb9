@@ -6,7 +6,7 @@
 
 @foreach (Book b in Model.Books)
 {
-    <partial name="ProjectSummary" model="b"/>
+    <partial name="BookSummary" model="b"/>
 }
 
 <div page-model="@Model.PageInfo" page-action="Index" page-class="btn"

@@ -20,5 +20,6 @@ namespace Mission09_dallinb9.Models
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
     }
 }
